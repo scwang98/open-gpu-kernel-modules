@@ -256,6 +256,9 @@ typedef struct
     // Dynamically allocated page mask allocated in
     // uvm_va_range_create_external() and used and freed in uvm_free().
     uvm_processor_mask_t *retained_mask;
+
+    // Remember encryption status of external VA range for confidential VMs
+    bool decrypted;
 } uvm_va_range_external_t;
 
 // va_range state when va_range.type == UVM_VA_RANGE_TYPE_CHANNEL. This
