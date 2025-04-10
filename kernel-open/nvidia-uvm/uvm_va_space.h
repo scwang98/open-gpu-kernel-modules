@@ -431,6 +431,7 @@ struct uvm_va_space_struct
 };
 
 NV_STATUS uvm_va_space_create(struct address_space *mapping, uvm_va_space_t **va_space_ptr, NvU64 flags);
+void uvm_va_space_revert_external(uvm_va_space_t *va_space);
 void uvm_va_space_destroy(uvm_va_space_t *va_space);
 
 // All VA space locking should be done with these wrappers. They're macros so

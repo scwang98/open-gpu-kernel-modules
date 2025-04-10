@@ -621,6 +621,11 @@ static NV_STATUS uvm_create_external_range(uvm_va_space_t *va_space, UVM_CREATE_
                          params->base + params->length);
     }
 
+    if (is_vm_encrypted(mm, va_range->node.start, va_range->node.end) == 1) {
+        set_vm_decrypted(mm, va_range->node.start, va_range->node.end);
+        va_range->external.decrypted = 1;
+    }
+    
     uvm_va_space_up_write(va_space);
     uvm_va_space_mm_or_current_release_unlock(va_space, mm);
     return status;

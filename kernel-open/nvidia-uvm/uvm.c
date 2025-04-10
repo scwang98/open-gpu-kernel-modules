@@ -256,6 +256,7 @@ static void uvm_mm_release(struct file *filp, struct file *uvm_file)
     struct mm_struct *mm = va_space_mm->mm;
 
     if (uvm_va_space_mm_enabled(va_space)) {
+        uvm_va_space_revert_external(va_space);
         uvm_va_space_mm_unregister(va_space);
 
         if (uvm_va_space_mm_enabled(va_space))
