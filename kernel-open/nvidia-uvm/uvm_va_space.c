@@ -422,6 +422,22 @@ void uvm_va_space_detach_all_user_channels(uvm_va_space_t *va_space, struct list
         uvm_gpu_va_space_detach_all_user_channels(gpu_va_space, deferred_free_list);
 }
 
+void uvm_va_space_revert_external(uvm_va_space_t *va_space)
+{
+    uvm_va_range_t *va_range, *next_va_range;
+    struct mm_struct *mm = va_space->va_space_mm.mm;
+
+    uvm_va_space_down_write(va_space);
+    uvm_for_each_va_range_safe(va_range, next_va_range, va_space) {
+        if (va_range->type == UVM_VA_RANGE_TYPE_EXTERNAL &&
+            va_range->external.decrypted == 1) {
+            set_vm_encrypted(mm, va_range->node.start, va_range->node.end);
+            va_range->external.decrypted = 0;
+        }
+    }
+    uvm_va_space_up_write(va_space);
+}
+
 void uvm_va_space_destroy(uvm_va_space_t *va_space)
 {
     uvm_va_range_t *va_range, *va_range_next;
