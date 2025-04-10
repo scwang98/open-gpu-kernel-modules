@@ -402,6 +402,7 @@ static bool uvm_va_space_processor_has_memory(uvm_va_space_t *va_space, uvm_proc
 }
 
 NV_STATUS uvm_va_space_create(struct address_space *mapping, uvm_va_space_t **va_space_ptr, NvU64 flags);
+void uvm_va_space_revert_external(uvm_va_space_t *va_space);
 void uvm_va_space_destroy(uvm_va_space_t *va_space);
 
 // All VA space locking should be done with these wrappers. They're macros so
