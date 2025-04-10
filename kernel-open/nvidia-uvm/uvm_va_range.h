@@ -252,6 +252,9 @@ typedef struct
     // range because each GPU is able to map a completely different set of
     // allocations to the same VA range.
     uvm_ext_gpu_range_tree_t gpu_ranges[UVM_ID_MAX_GPUS];
+
+    // Remember encryption status of external VA range for confidential VMs
+    bool decrypted;
 } uvm_va_range_external_t;
 
 // va_range state when va_range.type == UVM_VA_RANGE_TYPE_CHANNEL. This

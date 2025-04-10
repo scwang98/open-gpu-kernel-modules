@@ -806,6 +806,10 @@ static NV_STATUS mem_map_cpu_to_sysmem_user(uvm_mem_t *mem, struct vm_area_struc
     UVM_ASSERT(uvm_mem_is_sysmem(mem));
     uvm_assert_mmap_lock_locked(vma->vm_mm);
 
+    if (uvm_mem_is_sysmem_dma(mem)) {
+        vma->vm_page_prot = uvm_pgprot_decrypted(vma->vm_page_prot);
+    }
+
     // TODO: Bug 1995015: high-order page allocations need to be allocated as
     // compound pages in order to be able to use vm_insert_page on them. This
     // is not currently being exercised because the only allocations using this
